@@ -8,7 +8,7 @@ public class $name;format="Camel"$IT {
   
   @Test
   public void test() {
-    assertTrue(new $name;format="Camel"$.test());
+    assertTrue(new $name;format="Camel"$().test());
   }
 }
 
