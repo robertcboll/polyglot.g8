@@ -10,35 +10,43 @@ object Build extends sbt.Build {
       name := "$name$"
     )
 
-  import robb.sbt.Templates._
-  import robb.sbt.MigrationsPlugin._
-
-  import com.typesafe.sbt.SbtNativePackager.NativePackagerKeys._
-  import com.typesafe.sbt.SbtNativePackager._
+  import io.steeltoe.sbt._
+  import Templates._
+  import MigrationsPlugin._
 
   lazy val root = RootProject("$name$-root")
-    .aggregate(api, core, client, service, scala, docs)
+    .aggregate(/* add new modules here */)
     .settings(migrations: _*)
     .settings(giter8.ScaffoldPlugin.scaffoldSettings: _*)
     .settings(libraryDependencies ++= Dependencies.migrations)
 
+  import com.typesafe.sbt.SbtNativePackager._
+  import NativePackagerKeys._
+
+  /* 
+  // documentation project
   lazy val docs = DocProject("$name$-docs", deps = Seq(api, core, client, service, scala))
+  */
 
-  lazy val api = JavaProject("$name$-api")
-    .settings(libraryDependencies ++= Dependencies.api)
+  /*
+  // java project
+  lazy val java = JavaProject("$name$-java", deps = Seq(scala))
+    .settings(libraryDependencies ++= Dependencies.javaDeps)
+  */
 
-  lazy val core = JavaProject("$name$-core", deps = Seq(api))
-    .settings(libraryDependencies ++= Dependencies.core)
+  /*
+  // scala project
+  lazy val scala = ScalaProject("$name$-scala", deps = Seq(java))
+    .settings(libraryDependencies ++= Dependencies.scalaDeps)
+  */
 
-  lazy val client = JavaProject("$name$-client", deps = Seq(api))
-    .settings(libraryDependencies ++= Dependencies.client)
-
-  lazy val service = JavaProject("$name$-service", deps = Seq(core))
+  /*
+  // app project
+  lazy val runnable = JavaProject("$name$-app", deps = Seq(java, scala))
+    .settings(libraryDependencies ++= Dependencies.appDeps)
     .settings(runnable: _*)
     .settings(targz: _*)
-    .settings(mainClass := Some("$org$.$name$.$name;format="Camel"$"))
-    .settings(libraryDependencies ++= Dependencies.service)
-
-  lazy val scala = ScalaProject("$name$-scala")
+    .settings(mainClass := Some("mainClass"))
+  */
 }
 
