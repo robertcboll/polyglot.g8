@@ -4,12 +4,12 @@ import MigrationsPlugin.Keys.Migration
 
 object Versions {
 
-  val slf4j       = "1.7.7"
-  val logback     = "1.1.2"
+  val slf4j       = "$slf4j_version$"
+  val logback     = "$logback_version$"
 
-  val guava       = "18.0"
+  val guava       = "$guava_version$"
 
-  val postgres    = "9.3-1102-jdbc41"
+  val postgres    = "$postgres_version$"
 }
 
 object Dependencies {
