@@ -1,11 +1,11 @@
 import sbt._
-import robb.sbt.MigrationsPlugin.Keys._
+import io.steeltoe.sbt._
+import MigrationsPlugin.Keys.Migration
 
 object Versions {
 
   val slf4j       = "1.7.7"
   val logback     = "1.1.2"
-
 
   val guava       = "18.0"
 
@@ -24,10 +24,5 @@ object Dependencies {
 
 
   val migrations      =   Seq(postgres)
-
-  val api             =   Seq(slf4j)
-  val core            =   Seq()
-  val service         =   javalogging
-  val client          =   Seq()
 }
 
