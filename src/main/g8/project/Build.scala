@@ -19,6 +19,7 @@ object Build extends sbt.Build {
   lazy val root = RootProject("$name$-root")
     .aggregate(api, core, client, service, scala, docs)
     .settings(migrations: _*)
+    .settings(giter8.ScaffoldPlugin.scaffoldSettings: _*)
     .settings(libraryDependencies ++= Dependencies.migrations)
 
   lazy val docs = DocProject("$name$-docs", deps = Seq(api, core, client, service, scala))
