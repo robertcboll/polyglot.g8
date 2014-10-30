@@ -1,5 +1,5 @@
 import sbt._
-import io.steeltoe.sbt._
+import com.ondeck.sbt._
 import MigrationsPlugin.Keys.Migration
 
 object Versions {

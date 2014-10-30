@@ -10,7 +10,7 @@ object Build extends sbt.Build {
       name := "$name$"
     )
 
-  import io.steeltoe.sbt._
+  import com.ondeck.sbt._
   import Templates._
   import MigrationsPlugin._
 
