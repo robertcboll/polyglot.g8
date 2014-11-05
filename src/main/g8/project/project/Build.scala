@@ -1,11 +1,11 @@
 import sbt._
-
+import Keys._
 
 object PluginDef extends Build {
   
-  override def projects = Seq(root)
-
-  lazy val root = Project("plugins", file(".")) dependsOn 
-    RootProject(uri("ssh://stash.ondeck.local:7999/sch/sbt-base.git#v0.1"))
+  override lazy val settings = super.settings ++ Seq(
+    resolvers += "ondeck" at "https://build.ondeck.local/artifactory/repo",
+    addSbtPlugin("com.ondeck.sbt" % "sbt-base" % "0.3")
+    )
 }
 
