@@ -18,7 +18,7 @@ object Build extends sbt.Build {
       publishMavenStyle := true,
       credentials += Credentials(Path.userHome / ".sbt" / ".credentials"),
       publishTo <<= (version, gitHeadCommit) { (version, gitHeadCommit) =>
-        val snapshots = "ondeckcapital-snapshot"
+        val snapshots = "ondeckcapital-snapshot-non-unique"
         val releases = "ondeckcapital-release"
         gitHeadCommit match {
           case Some(commit) => Some(snapshots at artifactory + snapshots)
