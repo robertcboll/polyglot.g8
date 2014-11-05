@@ -4,10 +4,27 @@ import Keys._
 
 object Build extends sbt.Build {
 
+  import com.typesafe.sbt.SbtGit._
+  import GitKeys._
+
+  lazy val artifactory = "https://build.ondeck.local/artifactory/"
+
   override lazy val settings = super.settings ++
     Seq(
       organization := "$org$",
-      name := "$name$"
+      name := "$name$",
+      scalaVersion := "2.11.4",
+      resolvers += "ondeck" at artifactory + "repo",
+      publishMavenStyle := true,
+      credentials += Credentials(Path.userHome / ".sbt" / ".credentials"),
+      publishTo <<= (version, gitHeadCommit) { (version, gitHeadCommit) =>
+        val snapshots = "ondeckcapital-snapshot"
+        val releases = "ondeckcapital-release"
+        gitHeadCommit match {
+          case Some(commit) => Some(snapshots at artifactory + snapshots)
+          case None => Some(releases at artifactory + releases)
+        }
+      }
     )
 
   import com.ondeck.sbt._
