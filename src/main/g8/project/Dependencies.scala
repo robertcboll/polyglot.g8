@@ -24,5 +24,10 @@ object Dependencies {
 
 
   val migrations      =   Seq(postgres)
+
+
+  object Projects {
+    val core          = Seq()
+  }
 }
 

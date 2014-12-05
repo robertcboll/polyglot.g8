@@ -4,32 +4,20 @@ import Keys._
 
 object Build extends sbt.Build {
 
-  import com.typesafe.sbt.SbtGit._
-  import GitKeys._
+  import com.ondeck.sbt._
+  import Templates._
+  import ExtraSettings._
+  import ToolSettings._
+  import MigrationsPlugin._
 
-  lazy val artifactory = "https://build.ondeck.local/artifactory/"
-
-  override lazy val settings = super.settings ++
+  override lazy val settings = super.settings ++ mavenPublish ++
     Seq(
       organization := "$org$",
       name := "$name$",
-      scalaVersion := "2.11.4",
-      resolvers += "ondeck" at artifactory + "repo",
-      publishMavenStyle := true,
-      credentials += Credentials(Path.userHome / ".sbt" / ".credentials"),
-      publishTo <<= (version, gitHeadCommit) { (version, gitHeadCommit) =>
-        val snapshots = "ondeckcapital-snapshot-non-unique"
-        val releases = "ondeckcapital-release"
-        gitHeadCommit match {
-          case Some(commit) => Some(snapshots at artifactory + snapshots)
-          case None => Some(releases at artifactory + releases)
-        }
-      }
+      scalaVersion := "2.11.4"
     )
 
-  import com.ondeck.sbt._
-  import Templates._
-  import MigrationsPlugin._
+  import Dependencies.Projects
 
   lazy val root = RootProject("$name$-root")
     .aggregate(/* add new modules here */)
