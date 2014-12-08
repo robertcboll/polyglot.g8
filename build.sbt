@@ -1,7 +1,4 @@
-giter8Settings
-
-resolvers += Resolver.url("typesafe", 
-  url("http://repo.typesafe.com/typesafe/ivy-releases/"))(Resolver.ivyStylePatterns)
+giter8.Plugin.giter8Settings
 
 G8Keys.g8TestBufferLog := false
 

@@ -1,2 +1,2 @@
-git.baseVersion in ThisBuild := "$version$"
+git.baseVersion in ThisBuild := "$project_version$"
 

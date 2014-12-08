@@ -1,15 +1,16 @@
 import sbt._
-import com.ondeck.sbt._
-import MigrationsPlugin.Keys.Migration
+import sbtbase._
+import plugin.Migrations.Migration
+
 
 object Versions {
 
-  val slf4j       = "1.7.7"
-  val logback     = "1.1.2"
+  val slf4j       = "$version_slf4j$"
+  val logback     = "$version_logback$"
 
-  val guava       = "18.0"
+  val guava       = "$version_guava$"
 
-  val postgres    = "9.3-1102-jdbc41"
+  val postgres    = "$version_postgres$"
 }
 
 object Dependencies {
@@ -22,10 +23,8 @@ object Dependencies {
 
   val postgres        =   "org.postgresql"      %   "postgresql"        %   Versions.postgres % Migration
 
-
   val migrations      =   Seq(postgres)
-
-
+  
   object Projects {
     val core          = Seq()
   }
