@@ -9,11 +9,34 @@ object Build extends sbt.Build {
   import ExtraSettings._
   import plugin.Migrations._
 
+  import com.typesafe.sbt.SbtGit._
+  import GitKeys._
+
+
+  val repoBase = "$repo_base$"
+  val resolverBase = "$resolver_base$"
+  val gitverBase = "$gitver_base$"
+  val releaseBase = "$release_base$"
+  val mavenRelease = $maven_release$
+
+
   override lazy val settings = super.settings ++
     Seq(
       organization := "$package$",
       name := "$name$",
-      scalaVersion := "$version_scala$"
+      scalaVersion := "$version_scala$",
+      resolvers += "$resolver_name$" at s"\$repoBase\$resolverBase",
+      credentials += Credentials(Path.userHome / ".sbt" / ".credentials"),
+      publishTo <<= (version, gitHeadCommit) { (version, gitHeadCommit) =>
+        val resolverType = if (mavenRelease) Resolver.mavenStylePatterns else Resolver.ivyStylePatterns
+
+        val gitver = !gitHeadCommit.isEmpty && version.endsWith(gitHeadCommit.get)
+
+        val publishRepoBase = if (gitver) gitverBase else releaseBase
+
+        Some(Resolver.url("publish", url(s"\$repoBase\$publishRepoBase"))(resolverType))
+      },
+      publishMavenStyle := mavenRelease
     )
 
   import Dependencies.Projects
@@ -27,7 +50,7 @@ object Build extends sbt.Build {
   import com.typesafe.sbt.SbtNativePackager._
   import NativePackagerKeys._
 
-  /* `
+  /*
   // documentation project
   lazy val docs = DocProject("$name$-docs", deps = Seq(api, core, client, service, scala))
   */
