@@ -19,11 +19,17 @@ object Build extends sbt.Build {
   val releaseBase = "$release_base$"
   val mavenRelease = $maven_release$
 
+  val javaVersion = "$java_version$"
+
   override lazy val settings = super.settings ++
     Seq(
       organization := "$package$",
       name := "$name$",
       scalaVersion := "$version_scala$",
+
+      scalacOptions += s"-target:jvm-$javaVersion",
+      javacOptions ++= Seq("-source", javaVersion, "-target", javaVersion),
+
       resolvers += "$resolver_name$" at s"\$repoBase\$resolverBase",
       publishMavenStyle := mavenRelease,
       credentials += Credentials(Path.userHome / ".sbt" / ".credentials"),
@@ -80,7 +86,7 @@ object Build extends sbt.Build {
   /*
   // java project
   lazy val java = JavaProject("$name$-java", deps = Seq(scala))
-    .settings(libraryDependencies ++= .Projects.javaDeps)
+    .settings(libraryDependencies ++= Projects.javaDeps)
   */
 
   /*
@@ -100,6 +106,8 @@ object Build extends sbt.Build {
 
   /* 
     // for sequential (integration) tests
+    import de.johoop.jacoco4sbt.JacocoPlugin._
+
     .settings(parallelExecution in IntegrationTest := false)
     .settings(parallelExecution in itJacoco.Config := false)
    */
