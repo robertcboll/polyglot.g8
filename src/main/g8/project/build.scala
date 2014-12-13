@@ -19,7 +19,7 @@ object Build extends sbt.Build {
   val releaseBase = "$release_base$"
   val mavenRelease = $maven_release$
 
-  val javaVersion = "$java_version$"
+  val javaVersion = "$version_java$"
 
   override lazy val settings = super.settings ++
     Seq(
@@ -27,8 +27,8 @@ object Build extends sbt.Build {
       name := "$name$",
       scalaVersion := "$version_scala$",
 
-      scalacOptions += s"-target:jvm-$javaVersion",
-      javacOptions ++= Seq("-source", javaVersion, "-target", javaVersion),
+      scalacOptions in (Compile, compile) += s"-target:jvm-\$javaVersion",
+      javacOptions in (Compile, compile) ++= Seq("-source", javaVersion, "-target", javaVersion),
 
       resolvers += "$resolver_name$" at s"\$repoBase\$resolverBase",
       publishMavenStyle := mavenRelease,
