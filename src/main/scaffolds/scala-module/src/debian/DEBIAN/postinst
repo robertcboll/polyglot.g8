@@ -1,0 +1,26 @@
+${{header}}
+${{control-functions}}
+
+addUserWithUid() {
+    user="$1"
+    if [ -z "$user" ]; then
+	echo "usage: addUser user [group] [description] [shell]"
+	exit 1
+    fi
+    group=${2:-$user}
+    descr=${3:-No description}
+    shell=${4:-/bin/false}
+    uid=${5}
+    if ! getent passwd | grep -q "^$user:";
+    then
+	echo "Creating system user: $user in $group with $descr and shell $shell"
+	useradd --uid $uid --gid $group --no-create-home --system --shell $shell -c "$descr" $user
+    fi
+}
+
+uid=20000
+
+addGroup ${{daemon_group}}
+addUser ${{daemon_user}} ${{daemon_group}} "${{app_name}} daemon-user" ${{daemon_shell}} $uid
+
+${{chown-paths}}
