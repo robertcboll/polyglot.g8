@@ -51,14 +51,21 @@ object Build extends sbt.Build {
   import NativePackagerKeys._
 
   import com.typesafe.sbt.packager._
-  import archetypes.ServerLoader.SystemV
+  import archetypes.ServerLoader
+
+  val appUser = "$maintainer$"
+  val appMaintainer = "$package_summary$"
+  val appDescription = "$package_description$"
 
   val packaging = packageArchetype.java_server ++ Seq(
-    maintainer in Linux := "$maintainer$",
-    packageSummary in Linux := "$package_summary$",
-    packageDescription := "$package_description$",
+    maintainer in Linux := appMaintainer,
+    packageSummary in Linux := appDescription,
+    packageDescription := appDescription,
+
+    daemonUser in Linux := appUser,
+    daemonGroup in Linux := appUser,
     
-    serverLoading in Debian := SystemV,
+    serverLoading in Debian := ServerLoader.SystemV,
     packageBin in Debian <<= debianJDebPackaging in Debian,
     mappings in Universal <++= sourceDirectory map { src => Seq(
       src / "main" / "resources" / "reference.conf" -> "conf/application.conf",
@@ -74,8 +81,8 @@ object Build extends sbt.Build {
 
   lazy val root = RootProject("$name$")
     .aggregate(/* add new modules here */)
-    .settings(plugin.Migrations.migrations: _*)
     .settings(giter8.ScaffoldPlugin.scaffoldSettings: _*)
+    .settings(plugin.Migrations.migrations: _*)
     .settings(libraryDependencies ++= Dependencies.migrations)
 
   /*
