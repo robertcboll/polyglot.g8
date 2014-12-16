@@ -1,26 +1,45 @@
 ${{header}}
 ${{control-functions}}
 
-addUserWithUid() {
-    user="$1"
-    if [ -z "$user" ]; then
-	echo "usage: addUser user [group] [description] [shell]"
-	exit 1
-    fi
-    group=${2:-$user}
-    descr=${3:-No description}
-    shell=${4:-/bin/false}
-    uid=${5}
-    if ! getent passwd | grep -q "^$user:";
-    then
-	echo "Creating system user: $user with uid $uid in $group with $descr and shell $shell"
-	useradd --uid $uid --gid $group --no-create-home --system --shell $shell -c "$descr" $user
-    fi
+# Adding system group
+# $1 = group
+# $2 = gid
+addGroup() {
+  group="$1"
+  gid="$2"
+  if ! getent group | grep -q "^$group:" ;
+  then
+	  echo "Creating system group: $group with gid $gid"
+	  groupadd --system --gid $gid $group
+  fi
 }
 
-uid=set-a-uid-in-postinst
+# Adding system user
+# $1 = user
+# $2 = group
+# $3 = description
+# $4 = shell (defaults to /bin/false)
+# $5 = uid
+addUserWithUid() {
+  user="$1"
+  if [ -z "$user" ]; then
+	  echo "usage: addUser user [group] [description] [shell]"
+	  exit 1
+  fi
+  group=${2:-$user}
+  descr=${3:-No description}
+  shell=${4:-/bin/false}
+  uid=${5}
+  if ! getent passwd | grep -q "^$user:";
+  then
+	  echo "Creating system user: $user with uid $uid in $group with $descr and shell $shell"
+	  useradd --uid $uid --gid $group --no-create-home --system --shell $shell -c "$descr" $user
+  fi
+}
 
-addGroup ${{daemon_group}}
-addUserWithUid ${{daemon_user}} ${{daemon_group}} "${{app_name}} daemon-user" ${{daemon_shell}} $uid
+id=20000
+
+addGroup ${{daemon_group}} $id
+addUserWithUid ${{daemon_user}} ${{daemon_group}} "${{app_name}} daemon-user" ${{daemon_shell}} $id
 
 ${{chown-paths}}
