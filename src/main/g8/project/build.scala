@@ -26,6 +26,8 @@ object Build extends sbt.Build {
       name := "$name$",
       scalaVersion := "$version_scala$",
 
+      updateOptions := updateOptions.value.withCachedResolution(true),
+
       resolvers += "$resolver_name$" at s"\$repoBase\$resolverBase",
       publishMavenStyle := mavenRelease,
       credentials += Credentials(Path.userHome / ".sbt" / ".credentials"),
