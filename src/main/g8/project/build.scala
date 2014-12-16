@@ -1,7 +1,6 @@
 import sbt._
 import Keys._
 
-
 object Build extends sbt.Build {
 
   import sbtbase._
@@ -21,14 +20,11 @@ object Build extends sbt.Build {
 
   val javaVersion = "$version_java$"
 
-  override lazy val settings = super.settings ++
+  override lazy val settings = super.settings ++ JvmVersion.settings(javaVersion) ++
     Seq(
       organization := "$package$",
       name := "$name$",
       scalaVersion := "$version_scala$",
-
-      scalacOptions in (Compile, compile) += s"-target:jvm-\$javaVersion",
-      javacOptions in (Compile, compile) ++= Seq("-source", javaVersion, "-target", javaVersion),
 
       resolvers += "$resolver_name$" at s"\$repoBase\$resolverBase",
       publishMavenStyle := mavenRelease,
@@ -80,33 +76,36 @@ object Build extends sbt.Build {
   import Dependencies.Projects
 
   lazy val root = RootProject("$name$")
-    .aggregate(/* add new modules here */)
     .settings(giter8.ScaffoldPlugin.scaffoldSettings: _*)
     .settings(plugin.Migrations.migrations: _*)
+    .aggregate(/* add new modules here */)
     .settings(libraryDependencies ++= Dependencies.migrations)
 
   /*
   // documentation project
-  lazy val docs = DocProject("$name$-docs", deps = Seq(api, core, client, service, scala))
+  import com.typesafe.sbt.SbtSite.site
+
+  lazy val docs = DocProject("$name$-docs", deps = api, core, client, service, scala)
+    .settings(site.pamfletSupport(): _*) // or other
   */
 
   /*
   // java project
-  lazy val java = JavaProject("$name$-java", deps = Seq(scala))
+  lazy val java = JavaProject("$name$-java", deps = scala)
     .settings(libraryDependencies ++= Projects.javaDeps)
   */
 
   /*
   // scala project
-  lazy val scala = ScalaProject("$name$-scala", deps = Seq(java))
+  lazy val scala = ScalaProject("$name$-scala", deps = java)
     .settings(libraryDependencies ++= Projects.scalaDeps)
   */
 
   /*
   // app project
-  lazy val runnable = JavaProject("$name$-app", deps = Seq(java, scala))
+  lazy val runnable = JavaProject("$name$-app", deps = java, scala)
     .settings(libraryDependencies ++= Projects.appDeps)
-    .settings(ExtraSettings.runnable: _*)
+    .settings(Tools.runnable: _*)
     .settings(packaging: _*)
     .settings(mainClass := Some("mainClass"))
   */

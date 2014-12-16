@@ -15,15 +15,15 @@ object Versions {
 
 object Dependencies {
 
-  val slf4j           =   "org.slf4j"           %   "slf4j-api"         %   Versions.slf4j
-  val logback         =   "ch.qos.logback"      %   "logback-classic"   %   Versions.logback  % Test
-  val javalogging     =   Seq(slf4j, logback)
+  val slf4j           = "org.slf4j"           %   "slf4j-api"         %   Versions.slf4j
+  val logback         = "ch.qos.logback"      %   "logback-classic"   %   Versions.logback  % Test
+  val javalogging     = Seq(slf4j, logback)
 
-  val guava           =   "com.google.guava"    %   "guava"             %   Versions.guava
+  val guava           = "com.google.guava"    %   "guava"             %   Versions.guava
 
-  val postgres        =   "org.postgresql"      %   "postgresql"        %   Versions.postgres % Migration
+  val postgres        = "org.postgresql"      %   "postgresql"        %   Versions.postgres % Migration
 
-  val migrations      =   Seq(postgres)
+  val migrations      = Seq(postgres)
   
   object Projects {
     val core          = Seq()
