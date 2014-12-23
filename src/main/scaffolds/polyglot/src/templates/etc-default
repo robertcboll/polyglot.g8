@@ -14,15 +14,14 @@
 # ${{daemon_user}}      daemon user
 # -------------------------------------------------
 
-if [ -f /etc/environment ]; then
-  echo '/etc/environment found; loading environment variables'
-  source /etc/environment
-else
-  echo '[WARN] /etc/environment not found'
-fi
+# config environment - populated by ansible
+-Dconfig.env={{ config_env }}
 
 # application config file
 -Dconfig.file=${{chdir}}/conf/application.conf
+
+# log dir
+-Dlogdir=${{chdir}}/logs
 
 # logback config file
 -Dlogback.configurationFile=${{chdir}}/conf/logback.xml

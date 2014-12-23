@@ -4,7 +4,7 @@ ${{control-functions}}
 # Adding system group
 # $1 = group
 # $2 = gid
-addGroup() {
+addGroupWithGid() {
   group="$1"
   gid="$2"
   if ! getent group | grep -q "^$group:" ;
@@ -23,7 +23,7 @@ addGroup() {
 addUserWithUid() {
   user="$1"
   if [ -z "$user" ]; then
-	  echo "usage: addUser user [group] [description] [shell]"
+	  echo "usage: addUserWithUid user [group] [description] [shell] [uid]"
 	  exit 1
   fi
   group=${2:-$user}
@@ -37,9 +37,12 @@ addUserWithUid() {
   fi
 }
 
-id=20000
+gid=25000
+group="ondkapps"
 
-addGroup ${{daemon_group}} $id
-addUserWithUid ${{daemon_user}} ${{daemon_group}} "${{app_name}} daemon-user" ${{daemon_shell}} $id
+uid=20000
+
+addGroupWithGid $group $gid
+addUserWithUid ${{daemon_user}} $group "${{app_name}} daemon-user" ${{daemon_shell}} $uid
 
 ${{chown-paths}}

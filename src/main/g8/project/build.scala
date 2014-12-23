@@ -13,7 +13,8 @@ object Build extends sbt.Build {
   /* common settings   */
   /*                   */
   val repoBase = "$repo_base$"
-  val resolverBase = "$resolver_base$"
+  val mavenResolverBase = "$maven_resolver_base$"
+  val ivyResolverBase = "$ivy_resolver_base$"
   val gitverBase = "$gitver_base$"
   val releaseBase = "$release_base$"
   val mavenRelease = $maven_release$
@@ -28,7 +29,9 @@ object Build extends sbt.Build {
 
       updateOptions := updateOptions.value.withCachedResolution(true),
 
-      resolvers += "$resolver_name$" at s"\$repoBase\$resolverBase",
+      resolvers += Resolver.url("$ivy_resolver_name$", url(s"\$repoBase\$ivyResolverBase"))(Resolver.ivyStylePatterns),
+      resolvers += Resolver.url("$maven_resolver_name$", url(s"\$repoBase\$mavenResolverBase"))(Resolver.mavenStylePatterns),
+
       publishMavenStyle := mavenRelease,
       credentials += Credentials(Path.userHome / ".sbt" / ".credentials"),
       publishTo <<= (version, gitHeadCommit) { (version, gitHeadCommit) =>
