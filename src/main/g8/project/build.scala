@@ -45,35 +45,15 @@ object Build extends sbt.Build {
       }
     )
 
-  /*                      */
-  /* packaging settings   */
-  /*                      */
-  import com.typesafe.sbt.SbtNativePackager._
-  import NativePackagerKeys._
-
-  import com.typesafe.sbt.packager._
-  import archetypes.ServerLoader
-
-  val appUser = "$maintainer$"
-  val appMaintainer = "$package_summary$"
-  val appDescription = "$package_description$"
-
-  val packaging = packageArchetype.java_server ++ Seq(
-    maintainer in Linux := appMaintainer,
-    packageSummary in Linux := appDescription,
-    packageDescription := appDescription,
-
-    daemonUser in Linux := appUser,
-    daemonGroup in Linux := appUser,
-    
-    serverLoading in Debian := ServerLoader.SystemV,
-    packageBin in Debian <<= debianJDebPackaging in Debian,
-    mappings in Universal <++= sourceDirectory map { src => Seq(
-      src / "main" / "resources" / "reference.conf" -> "conf/application.conf",
-      src / "main" / "resources" / "logback.xml" -> "conf/logback.xml"
+  
+  lazy val aggregator = job ++ Seq(
+    debianPackageRecommends in Debian <<= (version in Linux) { (v) =>
+      Seq(
+        s"$name$-server (>= \$v)"      
       )
     }
   )
+
 
   /*                      */
   /* project definitions  */
