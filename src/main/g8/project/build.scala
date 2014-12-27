@@ -102,5 +102,20 @@ object Build extends sbt.Build {
     .settings(parallelExecution in IntegrationTest := false)
     .settings(parallelExecution in itJacoco.Config := false)
    */
+
+  /*
+   val aggregator = job ++ Seq(
+    debianPackageRecommends in Debian <<= (version in Linux) { (v) =>
+      Seq(
+        s"loansales-webservice (>= $v)",
+        s"loansales-notifier (>= $v)",
+        s"loansales-reminder (>= $v)"
+      )
+    }
+  )
+
+
+   
+   */
 }
 
