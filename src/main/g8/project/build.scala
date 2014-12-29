@@ -30,10 +30,8 @@ object Build extends sbt.Build {
 
   /*
   // documentation project
-  import com.typesafe.sbt.SbtSite.site
-
   lazy val docs = DocProject("docs", deps = api, core, client, service, scala)
-    .settings(site.pamfletSupport(): _*) // or other
+    .settings(Docs.pamflet: _*) // or other
   */
 
   /*
@@ -59,16 +57,16 @@ object Build extends sbt.Build {
   lazy val server = JavaProject("$name$-server", deps = java, scala)
     .settings(Tools.runnable: _*)
     .settings(Package.server: _*)
-    .settings(libraryDependencies ++= Projects.appDeps)
     .settings(mainClass := Some("mainClass"))
+    .settings(libraryDependencies ++= Projects.appDeps)
   */
 
   /*
   // app project
   lazy val app = JavaProject("$name$-app", deps = java, scala)
     .settings(Package.app: _*)
-    .settings(libraryDependencies ++= Projects.appDeps)
     .settings(mainClass := Some("mainClass"))
+    .settings(libraryDependencies ++= Projects.appDeps)
   */
 
 
