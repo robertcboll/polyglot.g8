@@ -1,10 +1,14 @@
 import sbt._
-import sbtbase._
-import plugin.Migrations.Migration
+
+import sbtbase.Tests.Keys.AllTests
+import sbtbase.plugin.Migrations.Migration
 
 
 object Versions {
 
+  val junit       = "$version_junit$"
+  val scalatest   = "$version_scalatest$"
+  
   val slf4j       = "$version_slf4j$"
   val logback     = "$version_logback$"
 
@@ -15,18 +19,22 @@ object Versions {
 
 object Dependencies {
 
-  val slf4j           = "org.slf4j"           %   "slf4j-api"         %   Versions.slf4j
-  val logback         = "ch.qos.logback"      %   "logback-classic"   %   Versions.logback  % Test
-  val javalogging     = Seq(slf4j, logback)
+  val junit       = "junit"         % "junit"     % Versions.junit      % Test
+  val scalatest   = "org.scalatest" % "scalatest" % Versions.scalatest  % Test
+  val test        = Seq(junit, scalatest)
 
-  val guava           = "com.google.guava"    %   "guava"             %   Versions.guava
+  val slf4j       = "org.slf4j"       % "slf4j-api"       % Versions.slf4j
+  val logback     = "ch.qos.logback"  % "logback-classic" % Versions.logback  % Test
+  val javalogging = Seq(slf4j, logback)
 
-  val postgres        = "org.postgresql"      %   "postgresql"        %   Versions.postgres % Migration
+  val guava       = "com.google.guava"  % "guava" % Versions.guava
 
-  val migrations      = Seq(postgres)
+  val postgres    = "org.postgresql"  % "postgresql"  % Versions.postgres % Migration
   
   object Projects {
-    val core          = Seq()
+    val migrations  = Seq(postgres)
+
+    val core        = Seq(test)
   }
 }
 
