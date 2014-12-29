@@ -1,0 +1,12 @@
+language: scala
+os:
+  - linux
+script:
+  - ./sbt ";clean ;g8Test"
+scala:
+  - 2.10.4
+jdk:
+  - openjdk7
+notifications:
+  email:
+    - robertcboll@gmail.com
