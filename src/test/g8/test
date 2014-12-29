@@ -1,0 +1,8 @@
+# create a scaffold
+#> g8Scaffold pamflet-docs
+#$ exists docs
+#> g8Scaffold polyglot
+#$ exists module
+
+> test
+

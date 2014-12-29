@@ -3,7 +3,6 @@ import sbt._
 import sbtbase.Tests.Keys.AllTests
 import sbtbase.plugin.Migrations.Keys.Migration
 
-
 object Versions {
 
   val junit       = "$version_junit$"
