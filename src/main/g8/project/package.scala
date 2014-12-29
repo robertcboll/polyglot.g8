@@ -10,13 +10,15 @@ object Package {
   import packager.archetypes.ServerLoader
   import packager.Keys._
 
+  import sbtbase.Packaging
+
 
   val appUser = "$app_user$"
   val appGroup = "$app_group$"
   val appMaintainer = "$app_maintainer$"
   val appDescription = "$app_description$"
 
-  lazy val settings = Seq(
+  lazy val settings = Packaging.settings ++ Seq(
     maintainer in Linux := appMaintainer,
     packageSummary in Linux := appDescription,
     packageDescription := appDescription,
