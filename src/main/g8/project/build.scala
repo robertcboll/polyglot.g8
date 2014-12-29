@@ -25,8 +25,7 @@ object Build extends sbt.Build {
 
   lazy val root = RootProject("$name$")
     .settings(giter8.ScaffoldPlugin.scaffoldSettings: _*)
-    .settings(libraryDependencies ++= Dependencies.migrations)
-    .settings(Package.recommends("" /* add dpkg deps here */))
+    .settings(Package.recommends("" /* add dpkg deps here */): _*)
     .aggregate(/* add new modules here */)
 
   /*

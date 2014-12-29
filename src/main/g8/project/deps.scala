@@ -1,7 +1,7 @@
 import sbt._
 
 import sbtbase.Tests.Keys.AllTests
-import sbtbase.plugin.Migrations.Migration
+import sbtbase.plugin.Migrations.Keys.Migration
 
 
 object Versions {
@@ -19,12 +19,12 @@ object Versions {
 
 object Dependencies {
 
-  val junit       = "junit"         % "junit"     % Versions.junit      % Test
-  val scalatest   = "org.scalatest" % "scalatest" % Versions.scalatest  % Test
+  val junit       = "junit"         % "junit"     % Versions.junit      % AllTests
+  val scalatest   = "org.scalatest" % "scalatest" % Versions.scalatest  % AllTests
   val test        = Seq(junit, scalatest)
 
   val slf4j       = "org.slf4j"       % "slf4j-api"       % Versions.slf4j
-  val logback     = "ch.qos.logback"  % "logback-classic" % Versions.logback  % Test
+  val logback     = "ch.qos.logback"  % "logback-classic" % Versions.logback  % AllTests
   val javalogging = Seq(slf4j, logback)
 
   val guava       = "com.google.guava"  % "guava" % Versions.guava
