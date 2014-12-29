@@ -16,7 +16,7 @@ object Package {
   val appMaintainer = "$app_maintainer$"
   val appDescription = "$app_description$"
 
-  lazy val packaging = Seq(
+  lazy val settings = Seq(
     maintainer in Linux := appMaintainer,
     packageSummary in Linux := appDescription,
     packageDescription := appDescription,
@@ -28,11 +28,11 @@ object Package {
     packageBin in Debian <<= debianJDebPackaging in Debian
   )
 
-  lazy val app = packageArchetype.java_application ++ packaging
-  lazy val server = packageArchetype.java_server ++ packaging
-
+  lazy val app = packageArchetype.java_application ++ settings
+  lazy val server = packageArchetype.java_server ++ settings
+  
   def recommends(projects: String*) = {
-    packageArchetype.java_application ++ packaging ++ Seq(
+    app ++ Seq(
       debianPackageRecommends in Debian <<= (version in Linux) { (v) =>
         projects map { id: String =>
           s"\$id (>= \$v)"

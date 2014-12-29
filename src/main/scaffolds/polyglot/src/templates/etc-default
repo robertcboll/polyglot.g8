@@ -4,27 +4,27 @@
 
 # Available replacements 
 # ------------------------------------------------
-# ${{author}}           debian author
-# ${{descr}}            debian package description
-# ${{exec}}             startup script name
-# ${{chdir}}            app directory
-# ${{retries}}          retries for startup
-# ${{retryTimeout}}     retry timeout
-# ${{app_name}}         normalized app name
-# ${{daemon_user}}      daemon user
+# \${{author}}           debian author
+# \${{descr}}            debian package description
+# \${{exec}}             startup script name
+# \${{chdir}}            app directory
+# \${{retries}}          retries for startup
+# \${{retryTimeout}}     retry timeout
+# \${{app_name}}         normalized app name
+# \${{daemon_user}}      daemon user
 # -------------------------------------------------
 
 # config environment - populated by ansible
 -Dconfig.env={{ config_env }}
 
 # application config file
--Dconfig.file=${{chdir}}/conf/application.conf
+-Dconfig.file=\${{chdir}}/conf/application.conf
 
 # log dir
--Dlogdir=${{chdir}}/logs
+-Dlogdir=\${{chdir}}/logs
 
 # logback config file
--Dlogback.configurationFile=${{chdir}}/conf/logback.xml
+-Dlogback.configurationFile=\${{chdir}}/conf/logback.xml
 
 # Setting -Xmx and -Xms in Megabyte
 # -mem 1024
