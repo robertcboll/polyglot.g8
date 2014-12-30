@@ -18,8 +18,8 @@ object Versions {
 
 object Dependencies {
 
-  val junit       = "junit"         % "junit"     % Versions.junit      % AllTests
-  val scalatest   = "org.scalatest" % "scalatest" % Versions.scalatest  % AllTests
+  val junit       = "junit"         %   "junit"     % Versions.junit      % AllTests
+  val scalatest   = "org.scalatest" %%  "scalatest" % Versions.scalatest  % AllTests
   val test        = Seq(junit, scalatest)
 
   val slf4j       = "org.slf4j"       % "slf4j-api"       % Versions.slf4j
