@@ -17,14 +17,15 @@
 # config environment - populated by ansible
 -Dconfig.env={{ config_env }}
 
-# application config file
+# application config file(s)
 -Dconfig.file=\${{chdir}}/conf/application.conf
-
-# log dir
--Dlogdir=\${{chdir}}/logs
+-Dconfig.envfile=\${{chdir}}/conf/environment.conf
 
 # logback config file
 -Dlogback.configurationFile=\${{chdir}}/conf/logback.xml
+
+# log dir
+-Dlogdir=\${{chdir}}/logs
 
 # Setting -Xmx and -Xms in Megabyte
 # -mem 1024
