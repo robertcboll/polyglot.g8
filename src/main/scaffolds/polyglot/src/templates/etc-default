@@ -14,8 +14,21 @@
 # \${{daemon_user}}      daemon user
 # -------------------------------------------------
 
+env_file=/etc/environment
+
+# source \$env_file if it exists
+if [ -f \$env_file ]; then
+  echo "INFO: sourcing \$env_file"
+  source \$env_file
+else
+  echo "WARN: \$env_file not found"
+  STAGE_NAME=dev
+fi
+
+echo "STAGE_NAME is \$STAGE_NAME"
+
 # config environment - populated by ansible
--Dconfig.env={{ config_env }}
+-Dconfig.env=\$STAGE_NAME
 
 # application config file(s)
 -Dconfig.file=\${{chdir}}/conf/application.conf

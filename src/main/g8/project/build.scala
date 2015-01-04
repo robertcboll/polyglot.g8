@@ -11,7 +11,7 @@ object Build extends sbt.Build {
   /*                   */
   val javaVersion = "$version_java$"
 
-  override lazy val settings = super.settings ++ JvmVersion.settings(javaVersion) ++ Publish.deploy ++
+  override lazy val settings = super.settings ++ JvmVersion.settings(javaVersion) ++ Publish.settings ++
     Seq(
       organization := "$package$",
       name := "$name$",
@@ -32,12 +32,6 @@ object Build extends sbt.Build {
   // documentation project
   lazy val docs = DocProject("docs", deps = api, core, client, service, scala)
     .settings(Docs.pamflet: _*) // or other
-  */
-
-  /*
-  // migrations project
-  lazy val migrations = MigrationsProject("migrations")
-    .settings(libraryDependencies ++= Projects.migrations)
   */
 
   /*

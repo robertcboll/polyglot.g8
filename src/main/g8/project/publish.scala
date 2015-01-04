@@ -3,7 +3,6 @@ import Keys._
 
 object Publish {
 
-  import sbtbase._
   import com.typesafe.sbt.SbtGit.GitKeys.gitHeadCommit
  
   val repoBase = "$repo_base$"
@@ -13,10 +12,11 @@ object Publish {
   val releaseBase = "$release_base$"
   val mavenRelease = $maven_release$
 
-  lazy val deploy = Seq(
+  lazy val settings = Seq(
     updateOptions := updateOptions.value.withCachedResolution(true),
 
-    resolvers += Resolver.url("$ivy_resolver_name$", url(s"\$repoBase\$ivyResolverBase"))(Resolver.ivyStylePatterns),
+    resolvers += Resolver.url("$ivy_resolver_name$", 
+      url(s"\$repoBase\$ivyResolverBase"))(Resolver.ivyStylePatterns),
     resolvers += "$maven_resolver_name$" at s"\$repoBase\$mavenResolverBase",
 
     publishMavenStyle := mavenRelease,

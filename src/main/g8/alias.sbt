@@ -1,1 +1,0 @@
-addCommandAlias("cover", ";jacoco:cover")

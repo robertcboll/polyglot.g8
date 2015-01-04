@@ -1,8 +1,23 @@
+# sbt
 .history
 target/
-.idea/
+
+# misc
 *.log
+
+# vi
 *.swp
+
+# intellij
 *.iml
+.idea/
+
+# mac
+.DS_Store
+
+# java
+hs_err_pid*
+
+# managed by sbt
 **/pamflet/template.properties
 

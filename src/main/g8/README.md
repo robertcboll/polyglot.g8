@@ -1,5 +1,2 @@
 # $name$
 
-## docs
-site here
-
