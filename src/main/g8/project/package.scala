@@ -26,9 +26,9 @@ object Package {
     packageDescription := appDescription,
     
     daemonUser in Linux := appUser,
-    daemonUserUid in Linux := Some(appUserUid),
+    //daemonUserUid in Linux := Some(appUserUid),
     daemonGroup in Linux := appGroup,
-    daemonGroupGid in Linux := Some(appGroupGid),
+    //daemonGroupGid in Linux := Some(appGroupGid),
 
     serverLoading in Debian := ServerLoader.SystemV
   )

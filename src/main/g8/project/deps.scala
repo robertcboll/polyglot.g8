@@ -22,7 +22,7 @@ object Dependencies {
   val guava       = "com.google.guava"  % "guava" % Versions.guava
  
   object Projects {
-    val core        = test ++ javaLogging + Seq(guava)
+    val core        = test ++ javalogging ++ Seq(guava)
   }
 }
 
